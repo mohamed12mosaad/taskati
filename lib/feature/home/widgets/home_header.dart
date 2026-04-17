@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
+import 'package:taskati_app/core/presentation/cubit/theme_cubit.dart';
 import 'package:taskati_app/core/services/hive_helper.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 import 'package:taskati_app/feature/profile/page/profile_screen.dart';
@@ -48,8 +51,21 @@ class _HomeHeaderState extends State<HomeHeader> {
               : Image.asset(AppImage.user,
                   height: 55, width: 55, fit: BoxFit.cover),
         ),
-        title: Text('Hello!', style: AppTextStyles.caption1),
-        subtitle: Text(name, style: AppTextStyles.title),
+        title: Text('Hello!', style: AppTextStyles.caption1.copyWith(
+          color: context.isDarkMode ? Colors.white : Colors.black,
+        )),
+        subtitle: Text(name, style: AppTextStyles.title.copyWith(
+          color: context.isDarkMode ? Colors.white : Colors.black,
+        )),
+        trailing: IconButton(
+          onPressed: () {
+            context.read<ThemeCubit>().changeTheme();
+          },
+          icon: Icon(
+            context.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+            color: context.isDarkMode ? Colors.white : Colors.black,
+          ),
+        ),
       ),
     );
   }

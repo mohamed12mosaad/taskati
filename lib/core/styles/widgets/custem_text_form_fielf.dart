@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -41,9 +42,9 @@ class CustomTextFormField extends StatelessWidget {
       child: Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          color: AppColors.whiteColor,
+          color: context.cardColor,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: context.isDarkMode ? [] : [
             BoxShadow(
               color: AppColors.accentColor.withValues(alpha: 0.1),
               blurRadius: 10,
@@ -59,9 +60,13 @@ class CustomTextFormField extends StatelessWidget {
               ? TextInputType.multiline
               : keyboardType,
           maxLines: maxLines,
-          style: const TextStyle(decoration: TextDecoration.none),
+          style: TextStyle(
+            decoration: TextDecoration.none,
+            color: context.isDarkMode ? Colors.white : Colors.black,
+          ),
           decoration: InputDecoration(
             hintText: hintText,
+            hintStyle: const TextStyle(color: Colors.grey),
             prefixIcon: prefixIcon,
             suffixIcon: suffix,
             contentPadding:

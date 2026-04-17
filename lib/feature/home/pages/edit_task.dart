@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
-import 'package:taskati_app/core/constants/functions/navigations.dart';
+import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/models/task_model.dart';
 import 'package:taskati_app/core/services/hive_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';

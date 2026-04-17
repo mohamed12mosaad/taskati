@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
-import 'package:taskati_app/core/constants/functions/navigations.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
+import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/services/hive_helper.dart';
-// import 'package:taskati_app/core/services/shared_pref.dart';
-import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 import 'package:taskati_app/feature/complete_profile/page/complete_profile_screen.dart';
 import 'package:taskati_app/feature/home/pages/home_screen.dart';
@@ -40,11 +39,16 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.asset(AppImage.logoJson),
-            Text('Taskati', style: AppTextStyles.headline),
             Text(
-              'It’s time to get organized',
+              'Taskati',
+              style: AppTextStyles.headline.copyWith(
+                color: context.isDarkMode ? Colors.white : Colors.black,
+              ),
+            ),
+            Text(
+              'It\'s time to get organized',
               style: AppTextStyles.caption1.copyWith(
-                color: AppColors.seconderyColor,
+                color: context.isDarkMode ? Colors.white : Colors.black,
               ),
             ),
             SizedBox(height: 100),

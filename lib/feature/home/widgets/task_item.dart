@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 
@@ -28,13 +29,9 @@ class TaskItem extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
+        color: context.cardColor,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: AppColors.whiteColor,
-          width: 1.0,
-        ),
-        boxShadow: [
+        boxShadow: context.isDarkMode ? [] : [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
             spreadRadius: 0,

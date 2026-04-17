@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
 import 'package:taskati_app/core/services/hive_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
@@ -55,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             AppImage.back,
             height: 30,
             width: 30,
+            colorFilter: context.isDarkMode ? const ColorFilter.mode(Colors.white, BlendMode.srcIn) : null,
           ),
         ),
         title: Text(
@@ -123,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         child: CircleAvatar(
                           radius: 20,
-                          backgroundColor: AppColors.whiteColor,
+                          backgroundColor: context.isDarkMode ? Colors.black : AppColors.whiteColor,
                           child: CustomSvgPicture(
                             path: AppImage.deleteSvg,
                             color: AppColors.redColor,

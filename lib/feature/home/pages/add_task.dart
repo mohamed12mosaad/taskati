@@ -3,7 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
-import 'package:taskati_app/core/constants/functions/navigations.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
+import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/models/task_model.dart';
 import 'package:taskati_app/core/services/hive_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
@@ -91,7 +92,7 @@ class _AddTaskState extends State<AddTask> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: SvgPicture.asset(AppImage.back, height: 30, width: 30),
+          icon: SvgPicture.asset(AppImage.back, height: 30, width: 30, colorFilter: context.isDarkMode ? const ColorFilter.mode(Colors.white, BlendMode.srcIn) : null),
         ),
         title: Text(widget.task == null ? 'Add Task' : 'Edit Task',
             style: AppTextStyles.headline),

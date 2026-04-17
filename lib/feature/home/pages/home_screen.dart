@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:taskati_app/core/constants/functions/navigations.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
+import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/models/task_model.dart';
 import 'package:taskati_app/core/services/hive_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       initialSelectedDate: DateTime.now(),
                       controller: controller,
                       selectionColor: AppColors.primaryColor,
-                      selectedTextColor: Colors.white,
+                      selectedTextColor: context.cardColor,
                       dateTextStyle: AppTextStyles.title.copyWith(fontWeight: FontWeight.w600),
                       monthTextStyle: AppTextStyles.caption2,
                       dayTextStyle: AppTextStyles.caption2,

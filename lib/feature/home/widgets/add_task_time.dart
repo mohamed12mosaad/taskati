@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
+import 'package:taskati_app/core/functions/extensions.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 
@@ -27,9 +28,9 @@ class AddTaskTime extends StatelessWidget {
         width: double.infinity,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppColors.whiteColor,
+          color: context.cardColor,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: context.isDarkMode ? [] : [
             BoxShadow(
               color: AppColors.accentColor.withValues(alpha: 0.1),
               blurRadius: 10,
@@ -45,6 +46,10 @@ class AddTaskTime extends StatelessWidget {
             iconPath,
             height: 24,
             width: 24,
+            colorFilter: const ColorFilter.mode(
+              Color(0xff9E92FF),
+              BlendMode.srcIn,
+            ),
           ),
           title: Text(
             text,
@@ -53,7 +58,10 @@ class AddTaskTime extends StatelessWidget {
           ),
           subtitle: Text(
             value,
-            style: AppTextStyles.caption1.copyWith(fontWeight: FontWeight.w500),
+            style: AppTextStyles.caption1.copyWith(
+              fontWeight: FontWeight.w500,
+              color: context.isDarkMode ? Colors.white : Colors.black,
+            ),
           ),
           trailing: IconButton(
             padding: EdgeInsets.zero,
@@ -63,6 +71,7 @@ class AddTaskTime extends StatelessWidget {
               AppImage.arrowDownSvg,
               width: 24,
               height: 24,
+              colorFilter: context.isDarkMode ? const ColorFilter.mode(Colors.white, BlendMode.srcIn) : null,
             ),
           ),
         ),

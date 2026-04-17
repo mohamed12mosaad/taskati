@@ -5,7 +5,7 @@ import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
-import 'package:taskati_app/core/constants/functions/navigations.dart';
+import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/models/task_model.dart';
 import 'package:taskati_app/core/services/hive_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
