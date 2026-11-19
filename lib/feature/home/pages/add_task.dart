@@ -6,7 +6,7 @@ import 'package:taskati_app/core/constants/app_image.dart';
 import 'package:taskati_app/core/functions/extensions.dart';
 import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/models/task_model.dart';
-import 'package:taskati_app/core/services/hive_helper.dart';
+import 'package:taskati_app/core/services/database_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 import 'package:taskati_app/core/styles/widgets/custem_text_form_fielf.dart';
@@ -150,26 +150,31 @@ class _AddTaskState extends State<AddTask> {
         padding: const EdgeInsets.fromLTRB(22, 5, 22, 30),
         child: MainButton(
           text: widget.task == null ? "Add Task" : "Update Task",
-          onPress: () {
+          onPress: () async {
             if (_titleController.text.isNotEmpty &&
                 _descriptionController.text.isNotEmpty) {
               String id = widget.task?.id ??
                   DateTime.now().millisecondsSinceEpoch.toString();
 
-              HiveHelper.cacheTask(
-                id,
-                TaskModel(
-                  id: id,
-                  title: _titleController.text,
-                  description: _descriptionController.text,
-                  date: _date,
-                  startTime: _startTime,
-                  endTime: _endTime,
-                  isCompleted: widget.task?.isCompleted ?? false,
-                ),
+              final task = TaskModel(
+                id: id,
+                title: _titleController.text,
+                description: _descriptionController.text,
+                date: _date,
+                startTime: _startTime,
+                endTime: _endTime,
+                isCompleted: widget.task?.isCompleted ?? false,
               );
 
-              PopTo(context, const HomeScreen());
+              if (widget.task == null) {
+                await DatabaseHelper.cacheTask(id, task);
+              } else {
+                await DatabaseHelper.updateTask(task);
+              }
+
+              if (context.mounted) {
+                PopTo(context, const HomeScreen());
+              }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Please fill all fields!')),

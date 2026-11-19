@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gap/gap.dart';
-import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
 import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/models/task_model.dart';
-import 'package:taskati_app/core/services/hive_helper.dart';
+import 'package:taskati_app/core/services/database_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/feature/home/pages/add_task.dart';
 import 'package:taskati_app/feature/home/widgets/task_item.dart';
@@ -26,10 +25,10 @@ class TaskListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     String formattedDate = DateFormat('dd MMM, yyyy').format(selectedDate);
 
-    return ValueListenableBuilder(
-      valueListenable: HiveHelper.taskBox.listenable(),
-      builder: (context, Box<TaskModel> box, _) {
-        List<TaskModel> tasks = box.values.where((task) {
+    return ValueListenableBuilder<List<TaskModel>>(
+      valueListenable: DatabaseHelper.tasksNotifier,
+      builder: (context, tasksList, _) {
+        List<TaskModel> tasks = tasksList.where((task) {
           bool isSameDate = task.date == formattedDate;
           if (filterStatus == 1) return isSameDate && !task.isCompleted;
           if (filterStatus == 2) return isSameDate && task.isCompleted;
@@ -65,13 +64,13 @@ class TaskListBuilder extends StatelessWidget {
                 motion: const ScrollMotion(),
                 dismissible: DismissiblePane(
                   onDismissed: () {
-                    box.delete(task.id);
+                    DatabaseHelper.deleteTask(task.id);
                   },
                 ),
                 children: [
                   SlidableAction(
                     onPressed: (context) {
-                      box.delete(task.id);
+                      DatabaseHelper.deleteTask(task.id);
                     },
                     backgroundColor: const Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
@@ -86,7 +85,7 @@ class TaskListBuilder extends StatelessWidget {
                   if (!task.isCompleted)
                     SlidableAction(
                       onPressed: (context) {
-                        box.put(task.id, task.copyWith(isCompleted: true));
+                        DatabaseHelper.updateTask(task.copyWith(isCompleted: true));
                       },
                       backgroundColor: const Color(0xFF7BC043),
                       foregroundColor: Colors.white,

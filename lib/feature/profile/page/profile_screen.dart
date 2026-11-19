@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
 import 'package:taskati_app/core/functions/extensions.dart';
-import 'package:taskati_app/core/services/hive_helper.dart';
+import 'package:taskati_app/core/services/database_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 import 'package:taskati_app/core/styles/widgets/custem_text_form_fielf.dart';
@@ -32,8 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void getData() {
-    String? savedName = HiveHelper.getData(HiveHelper.nameKey);
-    String? savedPath = HiveHelper.getData(HiveHelper.imageKey);
+    String? savedName = DatabaseHelper.getData(DatabaseHelper.nameKey);
+    String? savedPath = DatabaseHelper.getData(DatabaseHelper.imageKey);
 
     setState(() {
       if (savedName != null) {
@@ -194,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           text: "Save",
           onPress: () async {
             if (path != null && controller.text.isNotEmpty) {
-              await HiveHelper.setUserData(controller.text, path!);
+              await DatabaseHelper.setUserData(controller.text, path!);
               if (mounted) {
                 Navigator.pop(context, true);
               }

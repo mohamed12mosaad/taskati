@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
 import 'package:taskati_app/core/functions/navigations.dart';
-import 'package:taskati_app/core/services/hive_helper.dart';
+import 'package:taskati_app/core/services/database_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 import 'package:taskati_app/core/styles/widgets/custem_text_form_fielf.dart';
@@ -161,9 +161,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           text: "Let's Start !",
           onPress: () async {
             if (path != null && controller.text.isNotEmpty) {
-              await HiveHelper.setUserData(controller.text, path!);
+              await DatabaseHelper.setUserData(controller.text, path!);
 
-              await HiveHelper.cacheData(HiveHelper.isUploadedKey, true);
+              await DatabaseHelper.cacheData(DatabaseHelper.isUploadedKey, true);
 
               pushReplacementTo(context, HomeScreen());
             } else if (path == null && controller.text.isNotEmpty) {

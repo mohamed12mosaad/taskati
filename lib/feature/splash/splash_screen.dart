@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:taskati_app/core/constants/app_image.dart';
 import 'package:taskati_app/core/functions/extensions.dart';
 import 'package:taskati_app/core/functions/navigations.dart';
-import 'package:taskati_app/core/services/hive_helper.dart';
+import 'package:taskati_app/core/services/database_helper.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 import 'package:taskati_app/feature/complete_profile/page/complete_profile_screen.dart';
 import 'package:taskati_app/feature/home/pages/home_screen.dart';
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    bool isUploaded = HiveHelper.getData(HiveHelper.isUploadedKey) == true;
+    bool isUploaded = DatabaseHelper.getData(DatabaseHelper.isUploadedKey) == true;
     Future.delayed(Duration(seconds: 3), () {
       if (isUploaded){
         pushReplacementTo(context, HomeScreen());

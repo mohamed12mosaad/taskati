@@ -2,12 +2,11 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:taskati_app/core/functions/extensions.dart';
 import 'package:taskati_app/core/functions/navigations.dart';
 import 'package:taskati_app/core/models/task_model.dart';
-import 'package:taskati_app/core/services/hive_helper.dart';
+import 'package:taskati_app/core/services/database_helper.dart';
 import 'package:taskati_app/core/styles/colors.dart';
 import 'package:taskati_app/core/styles/text_style.dart';
 import 'package:taskati_app/feature/home/pages/add_task.dart';
@@ -36,6 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkMode = context.theme.brightness == Brightness.dark;
+    final Color unselectedDateColor = isDarkMode ? Colors.white : Colors.black;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -61,11 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: ValueListenableBuilder(
-              valueListenable: HiveHelper.taskBox.listenable(),
-              builder: (context, Box<TaskModel> box, _) {
+            child: ValueListenableBuilder<List<TaskModel>>(
+              valueListenable: DatabaseHelper.tasksNotifier,
+              builder: (context, tasks, _) {
                 String formattedDate = DateFormat('dd MMM, yyyy').format(_selectedDate);
-                var filteredTasks = box.values.where((task) => task.date == formattedDate).toList();
+                var filteredTasks = tasks.where((task) => task.date == formattedDate).toList();
 
                 int totalCount = filteredTasks.length;
                 int completedCount = filteredTasks.where((task) => task.isCompleted).length;
@@ -86,10 +88,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       initialSelectedDate: DateTime.now(),
                       controller: controller,
                       selectionColor: AppColors.primaryColor,
-                      selectedTextColor: context.cardColor,
-                      dateTextStyle: AppTextStyles.title.copyWith(fontWeight: FontWeight.w600),
-                      monthTextStyle: AppTextStyles.caption2,
-                      dayTextStyle: AppTextStyles.caption2,
+                      selectedTextColor: Colors.white,
+                      dateTextStyle: AppTextStyles.title.copyWith(
+                        color: unselectedDateColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      monthTextStyle: AppTextStyles.caption2.copyWith(
+                        color: unselectedDateColor,
+                      ),
+                      dayTextStyle: AppTextStyles.caption2.copyWith(
+                        color: unselectedDateColor,
+                      ),
                       onDateChange: (date) {
                         setState(() {
                           _selectedDate = date;

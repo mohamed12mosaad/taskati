@@ -101,6 +101,7 @@ class AppTheme {
     ),
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primaryColor,
+      brightness: Brightness.dark,
       onSurface: AppColors.whiteColor, // text color
     ),
     iconButtonTheme: IconButtonThemeData(
